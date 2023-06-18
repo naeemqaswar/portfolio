@@ -78,6 +78,7 @@ h6,
 .item {
   border: none;
   margin-bottom: 30px;
+  position: static !important;
 }
 
 .item .item-wrap {

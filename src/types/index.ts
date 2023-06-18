@@ -1,3 +1,10 @@
+export interface IPortfolio {
+  info: IInfo;
+  contact: IContact;
+  filters: IFilter[];
+  projects: IProject[];
+}
+
 export interface IInfo {
   title: string;
   headline: string;
@@ -32,4 +39,6 @@ export interface IProject {
 export interface IAppContext {
   popupContent: IProject | undefined;
   setPopupContent: Function;
+  portfolio?: IPortfolio | undefined;
+  setPortfolio?: Function;
 }
