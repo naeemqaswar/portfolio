@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+// @ts-ignore
+import { AnimateGroup } from "react-animate-mount";
 
 import { IProject } from "../../types";
 import Project from "../../components/Project";
-import {
-  LazyLoadComponent,
-  trackWindowScroll,
-} from "react-lazy-load-image-component";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const ProjectsPerPage = 10;
 
-function Projects(props: {
-  data: IProject[];
-  images: any;
-  scrollPosition: any;
-}) {
+function Projects(props: { data: IProject[] }) {
   const { data } = props;
   const [projects, setProjects] = useState<IProject[]>([]);
 
@@ -33,7 +27,12 @@ function Projects(props: {
   };
 
   return (
-    <div id="portfolio-grid" data-aos="fade-up" data-aos-delay="200">
+    <div
+      id="portfolio-grid"
+      data-aos="fade-up"
+      data-aos-delay="200"
+      className="row no-gutter portfolio-section"
+    >
       <InfiniteScroll
         className="row no-gutter portfolio-section"
         dataLength={projects.length}
@@ -44,18 +43,11 @@ function Projects(props: {
         scrollThreshold={0.5}
       >
         {projects.map((project, i) => (
-          <LazyLoadComponent
-            key={i}
-            delayMethod="debounce"
-            scrollPosition={props.scrollPosition}
-            visibleByDefault={false}
-          >
-            <Project key={i} index={i} details={project} />
-          </LazyLoadComponent>
+          <Project key={i} index={i} details={project} />
         ))}
       </InfiniteScroll>
     </div>
   );
 }
 
-export default trackWindowScroll(Projects);
+export default Projects;

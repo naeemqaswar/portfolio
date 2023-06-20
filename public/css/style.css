@@ -79,6 +79,7 @@ h6,
   border: none;
   margin-bottom: 30px;
   position: static !important;
+  /* transition: all 0.2s ease; */
 }
 
 .item .item-wrap {

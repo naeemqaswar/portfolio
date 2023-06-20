@@ -5,12 +5,22 @@ import AppContext from "../Context";
 
 export default function Project(props: any) {
   const { details } = props;
-  const { setPopupContent } = useContext(AppContext);
+  const { setPopupContent, selectedFilter } = useContext(AppContext);
 
   const { title, platform, filter, images, coverFocus = "top" } = details;
 
   const _coverImage = images[0];
   const _filterClasses = isArray(filter) ? filter.join(" ") : filter;
+  const _isSelected =
+    !selectedFilter || selectedFilter == "*"
+      ? true
+      : typeof filter === "string"
+      ? filter == selectedFilter
+      : filter.includes(selectedFilter);
+  console.log("_isSelected", _isSelected);
+  const _selectedStyle = !_isSelected
+    ? { visibility: "visible", width: 0 }
+    : {};
 
   return (
     <div className={`item ${_filterClasses} col-sm-12 col-md-12 col-lg-6 mb-6`}>

@@ -41,4 +41,6 @@ export interface IAppContext {
   setPopupContent: Function;
   portfolio?: IPortfolio | undefined;
   setPortfolio?: Function;
+  selectedFilter?: string | undefined;
+  setSelectedFilter: Function;
 }

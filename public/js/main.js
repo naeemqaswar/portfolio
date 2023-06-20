@@ -67,10 +67,10 @@
   });
   var parentElement = document; // if not sure about parent div then just use whole 'document'
 
-  projectsObserver.observe(parentElement, {
-    childList: true,
-    subtree: true,
-  });
+  // projectsObserver.observe(parentElement, {
+  //   childList: true,
+  //   subtree: true,
+  // });
 
   function setupPortfolioFilters() {
     let _directFilterRequest = getParameterByName("tech");

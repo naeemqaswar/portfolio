@@ -6,4 +6,6 @@ export default React.createContext<IAppContext>({
   setPopupContent: () => {},
   portfolio: undefined,
   setPortfolio: () => {},
+  selectedFilter: undefined,
+  setSelectedFilter: () => {},
 });

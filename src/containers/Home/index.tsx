@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import AppContext from "../../Context";
-import { IInfo, IFilter, IProject, IContact } from "../../types";
+import { IInfo, IFilter, IProject, IContact, IAppContext } from "../../types";
 import { base64Decode, getParameterByName } from "../../utils/helper";
 import Projects from "./Projects";
 import Footer from "../../components/Footer";
 
 export default function Home() {
-  const { portfolio } = useContext(AppContext);
+  const { portfolio, setPortfolio, selectedFilter, setSelectedFilter } =
+    useContext<IAppContext>(AppContext);
 
   const [info, setInfo] = useState<IInfo>();
   const [footerLinks, setFooterLinks] = useState<IContact>();
   const [filters, setFilters] = useState<IFilter[]>([]);
+  // const [selectedFilter, setSelectedFilter] = useState<string>();
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<IProject[]>([]);
 
   // Loading filter and project content
   useEffect(() => {
@@ -27,6 +30,7 @@ export default function Home() {
     setInfo(info);
     setFilters(filters);
     setProjects(_fProjects);
+    setFilteredProjects(_fProjects);
     setFooterLinks(contact);
   }, [portfolio]);
 
@@ -40,6 +44,24 @@ export default function Home() {
     }
 
     return false;
+  };
+
+  const _filterProjects = (filter: string) => {
+    if (!filter || !projects || projects.length == 0) return;
+
+    console.log("filter", filter);
+    if (filter == "*") {
+      setFilteredProjects(projects);
+    } else {
+      let _filtered = projects.filter((p) =>
+        typeof p.filter === "string"
+          ? p.filter == filter
+          : p.filter.includes(filter)
+      );
+      setFilteredProjects(_filtered);
+    }
+
+    setSelectedFilter(filter!);
   };
 
   if (!projects) return <div />;
@@ -66,9 +88,16 @@ export default function Home() {
                 {filters.map(({ name, title }, i) => (
                   <a
                     key={i}
-                    href="#"
+                    href="javascript:void(0);"
                     data-filter={name == "*" ? name : `.${name}`}
-                    className={i == 0 ? "active" : ""}
+                    className={
+                      !selectedFilter && i == 0
+                        ? "active"
+                        : selectedFilter == name
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() => _filterProjects(name)}
                   >
                     {title}
                   </a>
@@ -76,7 +105,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <Projects data={projects} />
+          <Projects data={filteredProjects} />
         </div>
       </section>
       <Footer contact={footerLinks} />

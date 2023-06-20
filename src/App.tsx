@@ -8,6 +8,9 @@ import { IPortfolio } from "./types";
 function App() {
   const [popupContent, setPopupContent] = useState();
   const [portfolio, setPortfolio] = useState<IPortfolio | undefined>(undefined);
+  const [selectedFilter, setSelectedFilter] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {});
 
@@ -27,7 +30,14 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ popupContent, setPopupContent, portfolio, setPortfolio }}
+      value={{
+        popupContent,
+        setPopupContent,
+        portfolio,
+        setPortfolio,
+        selectedFilter,
+        setSelectedFilter,
+      }}
     >
       <DetailsPopup
         display={typeof popupContent == "object"}
