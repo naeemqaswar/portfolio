@@ -34,6 +34,12 @@ export default function Home() {
     setFooterLinks(contact);
   }, [portfolio]);
 
+  useEffect(() => {
+    if (filters) {
+      _urlFilterCheck();
+    }
+  }, [filters]);
+
   const _securityCheck = (secure: boolean | undefined) => {
     if (!secure) return true;
 
@@ -46,10 +52,21 @@ export default function Home() {
     return false;
   };
 
+  const _urlFilterCheck = () => {
+    let _urlFilter = getParameterByName("filter");
+
+    if (
+      _urlFilter &&
+      _urlFilter.trim().length > 0 &&
+      filters.some((f) => f.name == _urlFilter)
+    ) {
+      _filterProjects(_urlFilter);
+    }
+  };
+
   const _filterProjects = (filter: string) => {
     if (!filter || !projects || projects.length == 0) return;
 
-    console.log("filter", filter);
     if (filter == "*") {
       setFilteredProjects(projects);
     } else {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const PROJECT_STATUS = Object.freeze({
   development: "development",
@@ -7,6 +7,19 @@ const PROJECT_STATUS = Object.freeze({
 
 export default function DetailsPopup(props: any) {
   const { display = false, details, hide } = props;
+
+  useEffect(() => {
+    const handleEsc = (event: any) => {
+      if (event.keyCode === 27 && hide) {
+        hide();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
 
   if (!display) return <div />;
 
@@ -48,7 +61,7 @@ export default function DetailsPopup(props: any) {
       <div className="modal-dialog modal-fullscreen">
         <div className="modal-content project-details">
           <div className="modal-body">
-            <div className="top-action">
+            <div className="top-action sticky-content">
               <button
                 type="button"
                 className="btn-close"

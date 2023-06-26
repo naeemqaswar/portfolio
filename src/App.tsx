@@ -6,7 +6,7 @@ import DetailsPopup from "./components/DetailsPopup";
 import { IPortfolio } from "./types";
 
 function App() {
-  const [popupContent, setPopupContent] = useState();
+  const [popupContent, setPopupContent] = useState(undefined);
   const [portfolio, setPortfolio] = useState<IPortfolio | undefined>(undefined);
   const [selectedFilter, setSelectedFilter] = useState<string | undefined>(
     undefined
@@ -39,11 +39,15 @@ function App() {
         setSelectedFilter,
       }}
     >
-      <DetailsPopup
-        display={typeof popupContent == "object"}
-        details={popupContent}
-        hide={() => setPopupContent(undefined)}
-      />
+      {typeof popupContent == "object" ? (
+        <DetailsPopup
+          display={typeof popupContent == "object"}
+          details={popupContent}
+          hide={() => setPopupContent(undefined)}
+        />
+      ) : (
+        <div />
+      )}
       <Home />
     </AppContext.Provider>
   );

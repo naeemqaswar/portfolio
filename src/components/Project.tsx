@@ -17,7 +17,6 @@ export default function Project(props: any) {
       : typeof filter === "string"
       ? filter == selectedFilter
       : filter.includes(selectedFilter);
-  console.log("_isSelected", _isSelected);
   const _selectedStyle = !_isSelected
     ? { visibility: "visible", width: 0 }
     : {};
