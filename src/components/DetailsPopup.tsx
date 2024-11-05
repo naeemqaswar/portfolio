@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import AppstoreBtn from "../assets/app-store-btn.png";
+import GooglePlayBtn from "../assets/google-play-btn.png";
 
 const PROJECT_STATUS = Object.freeze({
   development: "development",
@@ -36,6 +38,74 @@ export default function DetailsPopup(props: any) {
     secure = false,
     status = PROJECT_STATUS.live,
   } = details;
+
+  // console.log('demo:', demo);
+
+  const _renderDemos = () => {
+    if (!demo) return null;
+
+    console.log('demo:', demo);
+    const {android, ios, website, other} = demo;
+    let link = '';
+    let actions = [];
+
+    if(android){
+      actions.push(<div className="col col-6">
+        <a href={android} target="_blank">
+          <img
+            src={GooglePlayBtn}
+            alt='android'
+            className="img-fluid"
+          />
+        </a>
+      </div>);
+    }
+    if(ios){
+      actions.push(<div className="col col-6">
+        <a href={ios} className="" target="_blank">
+          <img
+            src={AppstoreBtn}
+            alt='android'
+            className="img-fluid"
+          />
+        </a>
+      </div>);
+    }
+    if(website){
+      actions.push(<div className="col col-6">
+        <a href={website} className="readmore" target="_blank">
+          Visit Website
+        </a>
+      </div>);
+    }
+    if(other){
+      actions.push(<div className="col col-6">
+        <a href={other} className="readmore" target="_blank">
+          View Demo
+        </a>
+      </div>);
+    }
+
+    // return {demo ? (
+    //   <a href={demo} className="readmore" target="_blank">
+    //     View Demo
+    //   </a>
+    // ) : null}
+
+    console.log('link', link);
+    
+    return <div className="mb-5 project-stack row gx-2 gy-2">
+      {actions}
+    </div>
+
+    return (
+      <span
+        className={`badge bg-${PROJECT_STATUS.live ? "secondary" : "success"}`}
+      >
+        {status == PROJECT_STATUS.development ? "Coming Soon" : status}
+      </span>
+    );
+  };
 
   const _renderStatus = () => {
     if (status !== PROJECT_STATUS.development) {
@@ -103,7 +173,7 @@ export default function DetailsPopup(props: any) {
                           <p>{description}</p>
                         </div>
                         <h4 className="h4 mb-3 fw-bold">Technology Stack</h4>
-                        <div className="mb-5 project-stack">
+                        <div className="mb-4 project-stack">
                           <ul>
                             {stack.map((tech: string, i: number) => (
                               <li key={i}>
@@ -116,11 +186,7 @@ export default function DetailsPopup(props: any) {
                           </ul>
                         </div>
                         <div>
-                          {demo ? (
-                            <a href={demo} className="readmore" target="_blank">
-                              View Demo
-                            </a>
-                          ) : null}
+                          {_renderDemos()}
                           {source ? (
                             <a
                               href={source}
